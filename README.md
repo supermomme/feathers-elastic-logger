@@ -1,12 +1,11 @@
 # feathers-elastic-logger
-## It's not finished!
 [![Build Status](https://travis-ci.org/supermomme/feathers-elastic-logger.svg?branch=master)](https://travis-ci.org/supermomme/feathers-elastic-logger)
-[![Code Climate](https://codeclimate.com/github/supermomme/feathers-elastic-logger/badges/gpa.svg)](https://codeclimate.com/github/supermomme/feathers-elastic-logger)
-[![Test Coverage](https://codeclimate.com/github/supermomme/feathers-elastic-logger/badges/coverage.svg)](https://codeclimate.com/github/supermomme/feathers-elastic-logger/coverage)
 [![Dependency Status](https://img.shields.io/david/supermomme/feathers-elastic-logger.svg?style=flat-square)](https://david-dm.org/supermomme/feathers-elastic-logger)
 [![Download Status](https://img.shields.io/npm/dm/feathers-elastic-logger.svg?style=flat-square)](https://www.npmjs.com/package/feathers-elastic-logger)
 
->
+## Why?
+
+I use it to monitor information with elastic and kibana
 
 ## Installation
 
@@ -16,7 +15,28 @@ npm install feathers-elastic-logger --save
 
 ## Documentation
 
-Please refer to the [feathers-elastic-logger documentation](http://docs.feathersjs.com/) for more details.
+#### Hook
+used as before, after and error hook in app
+
+service is the elastic service name
+
+it looks something like this
+
+```js
+app.hooks({
+  before: elasticLogger({ service: 'logger' }),
+  after: elasticLogger({ service: 'logger' }),
+  error: elasticLogger({ service: 'logger' })
+})
+```
+
+#### No Logging
+
+if you want a request unlogged, you can set noLogging to true like that
+
+```js
+someService.find({noLogging: true})
+```
 
 ## Complete Example
 
@@ -25,25 +45,58 @@ Here's an example of a Feathers server that uses `feathers-elastic-logger`.
 ```js
 const feathers = require('feathers');
 const rest = require('feathers-rest');
-const hooks = require('feathers-hooks');
+const handler = require('feathers-errors/handler');
 const bodyParser = require('body-parser');
-const errorHandler = require('feathers-errors/handler');
-const plugin = require('feathers-elastic-logger');
+const memory = require('feathers-memory');
+const hooks = require('feathers-hooks');
+const elasticsearch = require('elasticsearch');
+const elasticService = require('feathers-elasticsearch');
+const elasticLogger = require('feathers-elastic-logger');
 
-// Initialize the application
+// Create a feathers instance.
 const app = feathers()
-  .configure(rest())
   .configure(hooks())
-  // Needed for parsing bodies (login)
+  .configure(rest())
   .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
-  // Initialize your feathers plugin
-  .use('/plugin', plugin())
-  .use(errorHandler());
+  .use(bodyParser.urlencoded({extended: true}));
 
-app.listen(3030);
+//Create memory service
+app.use('/messages', memory({
+  paginate: {
+    default: 2,
+    max: 4
+  }
+}));
 
-console.log('Feathers app started on 127.0.0.1:3030');
+//Create elastic service
+app.use(`/logger`, elasticService({
+  Model: new elasticsearch.Client({
+    host: 'localhost:9200',
+    apiVersion: '5.0'
+  }),
+  elasticsearch: {
+    index: 'example',
+    type: 'logs'
+  }
+}));
+
+//Set elasticLogger hooks
+app.hooks({
+  before: elasticLogger({ service: 'logger' } ),
+  after: elasticLogger({ service: 'logger' } ),
+  error: elasticLogger({ service: 'logger' } )
+})
+
+// A basic error handler, just like Express
+app.use(handler());
+
+
+// Start the server
+var server = app.listen(3030);
+server.on('listening', function () {
+  console.log('Feathers running on 127.0.0.1:3030');
+});
+
 ```
 
 ## License

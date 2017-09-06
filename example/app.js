@@ -1,6 +1,5 @@
 const feathers = require('feathers');
 const rest = require('feathers-rest');
-const socketio = require('feathers-socketio');
 const handler = require('feathers-errors/handler');
 const bodyParser = require('body-parser');
 const memory = require('feathers-memory');
@@ -12,7 +11,6 @@ const plugin = require('../lib');
 // Create a feathers instance.
 const app = feathers()
   .configure(hooks())
-  .configure(socketio())
   .configure(rest())
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({extended: true}));
