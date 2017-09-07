@@ -1,7 +1,7 @@
 {
   "name": "feathers-elastic-logger",
   "description": "",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "https://github.com/supermomme/feathers-elastic-logger",
   "main": "lib/",
   "keywords": [
@@ -50,15 +50,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "debug": "^3.0.1",
-    "elasticsearch": "^13.3.1",
-    "feathers": "^2.2.0",
-    "feathers-elasticsearch": "^0.4.2",
-    "feathers-errors": "^2.9.1",
-    "feathers-hooks": "^2.0.2",
-    "feathers-memory": "^1.1.0",
-    "feathers-rest": "^1.8.0"
+    "feathers-errors": "^2.9.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -69,6 +61,14 @@
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.4.2",
     "semistandard": "^11.0.0",
-    "shx": "^0.2.2"
+    "shx": "^0.2.2",
+    "body-parser": "^1.17.2",
+    "debug": "^3.0.1",
+    "elasticsearch": "^13.3.1",
+    "feathers": "^2.2.0",
+    "feathers-elasticsearch": "^0.4.2",
+    "feathers-hooks": "^2.0.2",
+    "feathers-memory": "^1.1.0",
+    "feathers-rest": "^1.8.0"
   }
 }
