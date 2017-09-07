@@ -38,7 +38,6 @@ app.use(`/logger`, elasticService({
 
 //Set plugin hooks
 app.hooks({
-  before: plugin({ service: 'logger' } ),
   after: plugin({ service: 'logger' } ),
   error: plugin({ service: 'logger' } )
 })

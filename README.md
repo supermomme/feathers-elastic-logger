@@ -16,7 +16,7 @@ npm install feathers-elastic-logger --save
 ## Documentation
 
 #### Hook
-used as before, after and error hook in app
+used as after and error hook in app
 
 service is the elastic service name
 
@@ -24,7 +24,6 @@ it looks something like this
 
 ```js
 app.hooks({
-  before: elasticLogger({ service: 'logger' }),
   after: elasticLogger({ service: 'logger' }),
   error: elasticLogger({ service: 'logger' })
 })
@@ -82,7 +81,6 @@ app.use(`/logger`, elasticService({
 
 //Set elasticLogger hooks
 app.hooks({
-  before: elasticLogger({ service: 'logger' } ),
   after: elasticLogger({ service: 'logger' } ),
   error: elasticLogger({ service: 'logger' } )
 })
