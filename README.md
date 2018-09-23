@@ -1,7 +1,7 @@
 # feathers-elastic-logger
 [![Build Status](https://travis-ci.org/supermomme/feathers-elastic-logger.svg?branch=master)](https://travis-ci.org/supermomme/feathers-elastic-logger)
 [![Dependency Status](https://img.shields.io/david/supermomme/feathers-elastic-logger.svg?style=flat-square)](https://david-dm.org/supermomme/feathers-elastic-logger)
-[![Download Status](https://img.shields.io/npm/dm/feathers-elastic-logger.svg?style=flat-square)](https://www.npmjs.com/package/feathers-elastic-logger)
+[![Download Status](https://img.shields.io/npm/dm/feathers-elastic-logger.svg?style=flat-square)](https://www.npmjs.com/package/feathers-elastic-logger) [![Greenkeeper badge](https://badges.greenkeeper.io/supermomme/feathers-elastic-logger.svg)](https://greenkeeper.io/)
 
 ## Why?
 
